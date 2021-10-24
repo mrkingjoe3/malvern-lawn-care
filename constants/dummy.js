@@ -101,6 +101,99 @@ export const transactionHistory = [
     },
 ];
 
+const siteListData = [
+    {
+        id: 1,
+        address: "92 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 2,
+        address: "91 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 3,
+        address: "90 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 4,
+        address: "89 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 5,
+        address: "88 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 6,
+        address: "87 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 7,
+        address: "86 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 8,
+        address: "85 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 9,
+        address: "84 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 10,
+        address: "83 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 11,
+        address: "82 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 12,
+        address: "81 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    },
+    {
+        id: 13,
+        address: "80 Village Way",
+        customer: {value: 'Joe', label: 'Joe'},
+        workers: [{ value: "Joe", label: 'Joe' }, { value: "John", label: 'John' }],
+        description: "Probably should bring some tools!"
+    }
+]
 const employeeListData = [
     {
         name: 'Joe Campbell',
@@ -204,6 +297,6 @@ const employeeListData = [
     }
 ]
 
-const dummyData = { portfolio, trendingRewards, transactionHistory, employeeListData };
+const dummyData = { portfolio, trendingRewards, transactionHistory, employeeListData, siteListData };
 
 export default dummyData;

@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import firebase from 'firebase';
 import { AuthContext } from '../AuthContext';
-import EmployeeListView from './../components/EmployeeListView';
 
 const SignOutButton = ({ signOut }) => {
 

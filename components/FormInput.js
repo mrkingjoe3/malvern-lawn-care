@@ -5,18 +5,20 @@ import { AntDesign } from '@expo/vector-icons';
 import { FONTS } from '../constants';
 
 
-const FormInput = ({labelValue, placeholderText, icon, ...rest}) => {
+const FormInput = ({style, labelValue, placeholderText, icon, ...rest}) => {
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, style]}>
       <View style={styles.iconStyle}>
-        <AntDesign
+        {icon === 'user' || 'lock' || 'home' || 'tags'?
+          (<AntDesign
             name={icon}
             size={32}
-            color='black' />
+            color='black' />) : null}
+        
       </View>
       <TextInput
         value={labelValue}
-        style={styles.input}
+        style={[styles.input, style]}
         numberOfLines={1}
         placeholder={placeholderText}
         placeholderTextColor="#666"
@@ -40,6 +42,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
+    },
   iconStyle: {
     padding: 10,
     height: '100%',
@@ -57,15 +69,5 @@ const styles = StyleSheet.create({
     color: '#333',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputField: {
-    padding: 10,
-    marginTop: 5,
-    marginBottom: 10,
-    width: windowWidth / 1.5,
-    height: windowHeight / 15,
-    fontSize: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
+  }
 });

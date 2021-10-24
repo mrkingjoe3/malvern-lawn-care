@@ -2,7 +2,6 @@ import React, { useReducer, useMemo, useState } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import firebase from 'firebase';
-import { getDatabase, ref, onValue, set } from "firebase/database";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   API_KEY,
@@ -75,37 +74,43 @@ export default function App({ navigation }) {
   function setUserRole(uid, userRole) {
     firebase.database().ref('users/' + uid).set({ userRole })
       .then((data) => {
-        console.log('data ', data)
+        //console.log('data ', data)
       })
       .catch((error) => {
-        console.log('error ', error)
+        //console.log('error ', error)
       })
   }
 
-  // This is the authorization context for the app
-  // Using context, these functions/ variables are visible to any component
-  const authContext = useMemo(() => ({
+  // Signs the given user in and changes available screens
+  async function signIn({token, user}) {
 
-    signIn: async ({token, user}) => {
+    await AsyncStorage.setItem('token', JSON.stringify(token));
 
-      await AsyncStorage.setItem('token', JSON.stringify(token));
+    if (user) {
 
-      const db = getDatabase();
-      const reference = ref(db, "users/" + uid);
+      const uid = user.uid;
+      const email = user.email;
 
-      onValue(reference, (snapshot) => {
+      //TODO we can only referenc the database after writing ot it first why????
+      if (email === "j.campbell505@gmail.com") {
+        setUserRole(uid, "manager");
+      }
+      else {
+        setUserRole(uid, "regular");
+      }
+
+      // Check the user's role
+      firebase.database().ref('users/' + uid).once('value', (snapshot) => {
+          
+        console.log(snapshot.val())
 
         // If users role is initalized
         if (snapshot.val() && snapshot.val().userRole) {
 
-          const userRole = snapshot.val().userRole;
-
-          if (userRole === "manager") {
-            console.log('already manager')
+          if (snapshot.val().userRole === "manager") {
             dispatch({ type: 'SIGN_IN', token: 'token', isManager: true});
           }
           else {
-            console.log('not already manager')
             dispatch({ type: 'SIGN_IN', token: 'token', isManager: false});
           }
         }
@@ -114,79 +119,28 @@ export default function App({ navigation }) {
         else {
 
           if (email === "j.campbell505@gmail.com") {
-            setUserRole(uid, "manager");
-            console.log('manager')
-            dispatch({ type: 'SIGN_IN', token: 'token', isManager: true});
+              setUserRole(uid, "manager");
+              dispatch({ type: 'SIGN_IN', token: 'token', isManager: true});
           }
-
           else {
-            setUserRole(uid, "regular");
-            console.log('not manager')
-            dispatch({ type: 'SIGN_IN', token: 'token', isManager: false});
+              setUserRole(uid, "regular");
+              dispatch({ type: 'SIGN_IN', token: 'token', isManager: false});
           }
         }
-      });
-
-      /*if (user) {
-
-          const uid = user.uid;
-          const email = user.email;
-
-          setUserRole(uid, 'manager')
-
-          // Check the user's role
-          firebase.database().ref('users/' + uid).once('value', (snapshot) => {
-
-            // If users role is initalized
-            if (snapshot.val() && snapshot.val().userRole) {
-
-              const userRole = snapshot.val().userRole;
-
-              if (userRole === "manager") {
-                console.log('already manager')
-                dispatch({ type: 'SIGN_IN', token: 'token', isManager: true});
-              }
-              else {
-                  console.log('not manager')
-                  return false;
-              }
-            }
-
-            // If user's role is not initalized
-            else {
-
-              if (email === "j.campbell505@gmail.com") {
-                  //console.log('manager')
-                  setUserRole(uid, "manager");
-                  return true;
-              }
-              else {
-                  console.log('not manager')
-                  setUserRole(uid, "regular");
-                  return false;
-              }
-            }
-        })
-      }
-
-      else{
-        // We should never reach here, because this code
-        // is executed once a user sign ins
-        // We could add some error thingy here though to be safe
-      }*/
-    },
+      })
+    }
+  }
+  
+  async function signOut() {
+    await AsyncStorage.removeItem('token');
+    dispatch({ type: 'SIGN_OUT' });
+  }
     
-    signOut: async () => {
-      await AsyncStorage.removeItem('token');
-      dispatch({ type: 'SIGN_OUT' });
-    },
-      
-    signUp: async (data) => {
-      const isManager = isUserManager();
-      await AsyncStorage.setItem('token', JSON.stringify(data));
-      dispatch({ type: 'SIGN_IN', token: 'data', isManager: isManager });
-    },
-  }), []);
+  async function signUp(data) {
+    const isManager = isUserManager();
+    await AsyncStorage.setItem('token', JSON.stringify(data));
+    dispatch({ type: 'SIGN_IN', token: 'data', isManager: isManager });
+  }
 
   // Wait for the fonts to be loaded before procedding
   const [loaded] = useFonts({
@@ -202,7 +156,7 @@ export default function App({ navigation }) {
   return (
     // AuthContext wraps our entie app in this conext, allowing us to access
     // the authContext anywhere. Used for sign in and sign out methods
-    <AuthContext.Provider value={authContext}>
+    <AuthContext.Provider value={{ signIn, signOut, signUp }}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions = {{
@@ -219,47 +173,3 @@ export default function App({ navigation }) {
     </AuthContext.Provider>
   );
 }
-
-
-
-
-
-
-
-/*
-const App = () => {
-
-  return (
-
-    <NavigationContainer>
-      <Stack.Navigator   
-        screenOptions = {{
-          headerShown: false
-        }}  
-        initialRouteName = "Loading"
-      >
-
-        <Stack.Screen 
-          name = "Loading"
-          component = {LoadingScreen}
-        />
-        <Stack.Screen 
-          name = "SignIn"
-          component = {SignInScreen}
-        />
-        <Stack.Screen 
-          name = "Home"
-          component = {HomeScreen}
-        />
-        <Stack.Screen
-          name = 'SignUp'
-          component = {SignUpScreen}
-        />
-
-      </Stack.Navigator>
-    </NavigationContainer>
-
-  )
-};
-
-export default App;*/
