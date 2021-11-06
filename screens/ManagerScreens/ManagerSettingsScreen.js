@@ -3,16 +3,15 @@ import { ScrollView, FlatList,Button, Text, View, StyleSheet, TouchableOpacity }
 import { dummyData, COLORS, SIZES, FONTS, theme } from "../../constants"
 import { Ionicons } from '@expo/vector-icons';
 import firebase from 'firebase';
-import { AuthContext } from '../../AuthContext';
+import { useAuth } from "../../context/AuthProvider";
 import MainContainer from '../../components/MainContainer'
 import MainButton from './../../components/MainButton';
 
-
-    
-
 function ManagerSettingsScreen() {
 
-    const { signOut } = useContext(AuthContext);
+    const { state, signOut } = useAuth();
+
+    React.useEffect(() => console.log(state))
 
     function onPress(){
         firebase.auth().signOut()
@@ -26,7 +25,7 @@ function ManagerSettingsScreen() {
 
     return (
         <MainContainer kids={
-            <MainButton onPress={onPress} type={"signout"}/>
+            <MainButton onPress={onPress} type={"signout"} />
         }/>
     );
 }

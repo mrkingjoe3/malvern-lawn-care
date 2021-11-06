@@ -1,8 +1,8 @@
 import React, {useCallback, useContext} from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import firebase from 'firebase';
-import { AuthContext } from '../AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAuth } from "../context/AuthProvider";
 
 // This is the first screen when the app opens
 // This screen will check if the user is signed in
@@ -10,12 +10,13 @@ import { useFocusEffect } from '@react-navigation/native';
 const LoadingScreen = ({ navigation }) => {
     
     // The global sign in function
-    const { signIn } = useContext(AuthContext);
-
-  
+    const { state, signIn } = useAuth();
     
     useFocusEffect(
+
         useCallback(() => {
+
+            console.log("State: " + state.userToken)
     
             // When the user signs in, the auth state changes
             // Get the user token, and call the signIn method
