@@ -11,8 +11,6 @@ function ManagerSettingsScreen() {
 
     const { state, signOut } = useAuth();
 
-    React.useEffect(() => console.log(state))
-
     function onPress(){
         firebase.auth().signOut()
             .then(() => {

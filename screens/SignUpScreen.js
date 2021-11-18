@@ -3,8 +3,6 @@ import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet} from 'react
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
-import 'firebase/firestore';
-import 'firebase/firestore';
 import firebase from 'firebase';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';

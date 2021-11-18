@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import CustomListView from "../../components/CustomListView";
 import MainContainer from "../../components/MainContainer";
 import MainButton from "./../../components/MainButton";
-import { useWorkSiteContext } from "../../context/managerContext/WorkSiteProvider";
+import { useCustomerContext } from "../../context/managerContext/CustomerProvider";
 
-export default function ManagerWorkSiteListScreen({ navigation }) {
-    const { getWorkSiteList, updateWorkSiteState, clearWorkSiteState } =
-        useWorkSiteContext();
+export default function ManagerCustomerListScreen({ navigation }) {
+    const { getCustomerList, updateCustomerState, clearCustomerState } =
+        useCustomerContext();
 
-    const [siteListData, setSiteListData] = useState([]);
+    const [customerListData, setCustomerListData] = useState([]);
 
-    // Open an existing work site
+    // Open an existing work customer
     function onPressView(data) {
-        updateWorkSiteState(data);
-        navigation.navigate("ManagerWorkSiteEdit", { isAddWorkSite: false });
+        updateCustomerState(data);
+        navigation.navigate("ManagerCustomerEdit", { isAddCustomer: false });
     }
 
-    // Create a new work site
+    // Create a new work customer
     function onPressAdd() {
-        clearWorkSiteState();
-        navigation.navigate("ManagerWorkSiteEdit", { isAddWorkSite: true });
+        clearCustomerState();
+        navigation.navigate("ManagerCustomerEdit", { isAddCustomer: true });
     }
 
     useEffect(() => {
-        setSiteListData(getWorkSiteList());
+        setCustomerListData(getCustomerList());
     });
 
     return (
@@ -37,10 +37,10 @@ export default function ManagerWorkSiteListScreen({ navigation }) {
                         }}
                     >
                         <CustomListView
-                            data={siteListData}
+                            data={customerListData}
                             onPress={onPressView}
-                            header={"Select a Job Site"}
-                            type={"site"}
+                            header={"Select a Customer"}
+                            type={"person"}
                         />
                     </View>
                     <View

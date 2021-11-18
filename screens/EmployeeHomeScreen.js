@@ -4,7 +4,7 @@ import { dummyData, COLORS, SIZES, FONTS, theme } from "../constants"
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import firebase from 'firebase';
-import { AuthContext } from '../AuthContext';
+import { useAuth } from "../context/AuthProvider";
 
 const SignOutButton = ({ signOut }) => {
 
@@ -41,8 +41,17 @@ const SignOutButton = ({ signOut }) => {
 
 function EmployeeHomeScreen({ navigation }) {
     
-    const { signOut } = useContext(AuthContext);
-    const [employeeListData, setEmployeeListData] = useState(dummyData.employeeListData);
+    const { signOut } = useAuth();
+
+    function onPress(){
+        firebase.auth().signOut()
+            .then(() => {
+                signOut()
+            })
+            .catch((error) => {
+                console.error('Sign Out Error', error)
+            });
+        }
 
     return (
 
